@@ -1,0 +1,14 @@
+C:\Users\X230\source\repos\EmployeeManagementApp\Business_Logic_Layer\bin\Debug\netcoreapp3.1\Business_Logic_Layer(BLL).deps.json
+C:\Users\X230\source\repos\EmployeeManagementApp\Business_Logic_Layer\bin\Debug\netcoreapp3.1\Business_Logic_Layer(BLL).dll
+C:\Users\X230\source\repos\EmployeeManagementApp\Business_Logic_Layer\bin\Debug\netcoreapp3.1\Business_Logic_Layer(BLL).pdb
+C:\Users\X230\source\repos\EmployeeManagementApp\Business_Logic_Layer\bin\Debug\netcoreapp3.1\Business_Object_Layer(BOL).dll
+C:\Users\X230\source\repos\EmployeeManagementApp\Business_Logic_Layer\bin\Debug\netcoreapp3.1\Data_Access_Layer(DAL).dll
+C:\Users\X230\source\repos\EmployeeManagementApp\Business_Logic_Layer\bin\Debug\netcoreapp3.1\Business_Object_Layer(BOL).pdb
+C:\Users\X230\source\repos\EmployeeManagementApp\Business_Logic_Layer\bin\Debug\netcoreapp3.1\Data_Access_Layer(DAL).pdb
+C:\Users\X230\source\repos\EmployeeManagementApp\Business_Logic_Layer\obj\Debug\netcoreapp3.1\Business_Logic_Layer(BLL).csproj.AssemblyReference.cache
+C:\Users\X230\source\repos\EmployeeManagementApp\Business_Logic_Layer\obj\Debug\netcoreapp3.1\Business_Logic_Layer(BLL).AssemblyInfoInputs.cache
+C:\Users\X230\source\repos\EmployeeManagementApp\Business_Logic_Layer\obj\Debug\netcoreapp3.1\Business_Logic_Layer(BLL).AssemblyInfo.cs
+C:\Users\X230\source\repos\EmployeeManagementApp\Business_Logic_Layer\obj\Debug\netcoreapp3.1\Business_Logic_Layer(BLL).csproj.CoreCompileInputs.cache
+C:\Users\X230\source\repos\EmployeeManagementApp\Business_Logic_Layer\obj\Debug\netcoreapp3.1\Business_Logic_Layer(BLL).dll
+C:\Users\X230\source\repos\EmployeeManagementApp\Business_Logic_Layer\obj\Debug\netcoreapp3.1\Business_Logic_Layer(BLL).pdb
+C:\Users\X230\source\repos\EmployeeManagementApp\Business_Logic_Layer\obj\Debug\netcoreapp3.1\Business_Logic_Layer(BLL).csproj.CopyComplete

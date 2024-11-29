@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MetroFramework" Version="1.2.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.32">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Business_Logic_Layer\Business_Logic_Layer.csproj" />
+    <ProjectReference Include="..\Business_Object_Layer(BOL)\Business_Object_Layer(BOL).csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DPCtlUruNet">
+      <HintPath>External DLL\DPCtlUruNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DPCtlXUru">
+      <HintPath>External DLL\DPCtlXUru.dll</HintPath>
+    </Reference>
+    <Reference Include="DPUruNet">
+      <HintPath>External DLL\DPUruNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DPXUru">
+      <HintPath>External DLL\DPXUru.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="External DLL\DPCtlUruNet.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="External DLL\DPCtlXUru.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="External DLL\DPUruNet.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="External DLL\DPXUru.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

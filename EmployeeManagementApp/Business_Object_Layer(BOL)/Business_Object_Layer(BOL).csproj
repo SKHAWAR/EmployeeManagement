@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Business_Object_Layer_BOL_</RootNamespace>
+  </PropertyGroup>
+
+</Project>
