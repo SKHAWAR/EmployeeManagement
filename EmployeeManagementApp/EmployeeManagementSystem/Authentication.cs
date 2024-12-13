@@ -26,6 +26,7 @@ namespace EmployeeManagementSystem
         {
             employeeInformationBs = _employeeInformationBs;
             InitializeComponent();
+
         }
 
         private void Authentication_Load(object sender, EventArgs e)
@@ -41,14 +42,29 @@ namespace EmployeeManagementSystem
                 CurrentReader = null;
             }
             CurrentReader = _readers[cboReaders.SelectedIndex];
+
             if (!OpenReader())
             {
-                //this.Close();
+                // OpenReader();
+                // this.Close();
+                //    return;
             }
+
+            // Start capturing
             if (!StartCaptureAsync(this.OnCaptured))
             {
-                //this.Close();
+                //   StartCaptureAsync(this.OnCaptured);
+                //  this.Close();
             }
+
+
+
+
+
+
+
+
+
 
         }
         private Reader currentReader;
@@ -70,31 +86,7 @@ namespace EmployeeManagementSystem
         List<DPUruNet.Fmd> preenrollmentFmds;
         private bool reset;
 
-        private void AddEmployee_Load(object sender, EventArgs e)
-        {
-            LoadScanners();
-            firstFinger = null;
-            resultEnrollment = null;
-            preenrollmentFmds = new List<DPUruNet.Fmd>();
-            pbFingerprint.Image = null;
-            if (CurrentReader != null)
-            {
-                CurrentReader.Dispose();
-                CurrentReader = null;
-            }
-            CurrentReader = _readers[cboReaders.SelectedIndex];
-            if (!OpenReader())
-            {
-                //this.Close();
-            }
-            if (!StartCaptureAsync(this.OnCaptured))
-            {
-                //this.Close();
-            }
 
-
-
-        }
         private enum Action
         {
             UpdateReaderState,
@@ -136,6 +128,9 @@ namespace EmployeeManagementSystem
             get { return reset; }
             set { reset = value; }
         }
+
+        public bool GetDataOnBarCodeBasis { get; private set; }
+
         public void OnCaptured(CaptureResult captureResult)
         {
             try
@@ -161,17 +156,46 @@ namespace EmployeeManagementSystem
                         }
                         throw new Exception(resultConversion.ResultCode.ToString());
                     }
-                    string fmdAsString = Convert.ToBase64String(resultConversion.Data.Bytes);
-                   var value= employeeInformationBs.GetById(fmdAsString);
+                    firstFinger = resultConversion.Data;
+                    var value = employeeInformationBs.GetAll();
 
-                    if (value !=null)
+                    if (value != null)
                     {
-                        SendMessage(Action.SendMessage, "Place a finger on the reader.");
+                        foreach (var item in value)
+                        {
+                            Fmd val = Fmd.DeserializeXml(item.ThumbPrint);
+                            CompareResult compare = Comparison.Compare(firstFinger, 0, val, 0);
+                            if (compare.ResultCode != Constants.ResultCode.DP_SUCCESS)
+                            {
+                                Reset = true;
+                                throw new Exception(compare.ResultCode.ToString());
+                            }
+
+                            if (Convert.ToDouble(compare.Score.ToString()) == 0)
+                            {
+                                GetDataOnBarCodeBasis = true;
+
+                                this.Invoke(new MethodInvoker(() =>
+                                {
+                                    EmployeeNameTextBox.Text = item.Name;
+                                }));
+                                MessageBox.Show("Fingerprint matching successful");
+                                GetDataOnBarCodeBasis = false;
+                                break;
+                            }
+                        }
+
+
                     }
+
+
                     else
                     {
                         SendMessage(Action.SendMessage, "Fringer print not matched");
                     }
+
+
+
 
                 }
                 catch (Exception ex)
@@ -274,7 +298,7 @@ namespace EmployeeManagementSystem
                 DPUruNet.Constants.ResultCode result = DPUruNet.Constants.ResultCode.DP_DEVICE_FAILURE;
 
                 // Open reader
-                //                result = currentReader.Open(DPUruNet.Constants.CapturePriority.DP_PRIORITY_COOPERATIVE);
+                result = currentReader.Open(DPUruNet.Constants.CapturePriority.DP_PRIORITY_COOPERATIVE);
 
                 if (result != DPUruNet.Constants.ResultCode.DP_SUCCESS)
                 {
@@ -297,7 +321,7 @@ namespace EmployeeManagementSystem
             using (Tracer tracer = new Tracer("Form_Main::StartCaptureAsync"))
             {
                 // Activate capture handler
-                //       currentReader.On_Captured += new Reader.CaptureCallback(OnCaptured);
+                currentReader.On_Captured += new Reader.CaptureCallback(OnCaptured);
 
                 // Call capture
                 if (!CaptureFingerAsync())
@@ -357,6 +381,42 @@ namespace EmployeeManagementSystem
                     throw new Exception("Reader Status - " + currentReader.Status.Status);
                 }
             }
+        }
+
+        private void Authentication_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+
+
+        }
+        public void CancelCaptureAndCloseReader(Reader.CaptureCallback OnCaptured)
+        {
+            using (Tracer tracer = new Tracer("Form_Main::CancelCaptureAndCloseReader"))
+            {
+                if (currentReader != null)
+                {
+                    currentReader.CancelCapture();
+
+                    // Dispose of reader handle and unhook reader events.
+                    currentReader.Dispose();
+
+                    if (reset)
+                    {
+                        CurrentReader = null;
+                    }
+                }
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            CancelCaptureAndCloseReader(this.OnCaptured);
+            this.Close();
+        }
+
+        private void Authentication_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            CancelCaptureAndCloseReader(this.OnCaptured);
         }
     }
 }

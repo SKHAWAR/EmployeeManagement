@@ -11,8 +11,8 @@ namespace Data_Access_Layer_DAL_
         public EMDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<EMDbContext>();
-            optionsBuilder.UseSqlServer("Server=DESKTOP-05PKT0S;Database=EmployeeManagementSystem;Trusted_Connection=True;");
-            return new EMDbContext(optionsBuilder.Options);
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-OT3JDKD\SQLEXPRESS2008;Database=EmployeeManagementSystem;User Id=sa;Password=ahghbfgfc;");
+                return new EMDbContext(optionsBuilder.Options);
         }
     }
 }

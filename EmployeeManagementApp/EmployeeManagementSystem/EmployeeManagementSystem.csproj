@@ -20,6 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="External DLL\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="DPCtlUruNet">
       <HintPath>External DLL\DPCtlUruNet.dll</HintPath>
     </Reference>
@@ -32,21 +36,6 @@
     <Reference Include="DPXUru">
       <HintPath>External DLL\DPXUru.dll</HintPath>
     </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="External DLL\DPCtlUruNet.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="External DLL\DPCtlXUru.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="External DLL\DPUruNet.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="External DLL\DPXUru.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

@@ -17,7 +17,7 @@ namespace EmployeeManagementSystem
         {
             ServiceProvider = new ServiceCollection()
                .AddDbContext<EMDbContext>(options =>
-                   options.UseSqlServer(@"Server=DESKTOP-05PKT0S;Database=EmployeeManagementSystem;Trusted_Connection=True;")) // Replace with your actual connection string
+                   options.UseSqlServer(@"Server=DESKTOP-OT3JDKD\SQLEXPRESS2008;Database=EmployeeManagementSystem;User Id=sa;Password=ahghbfgfc;")) // Replace with your actual connection string
                .AddTransient<ILoginDb, LoginDb>()
                .AddTransient<ILoginBs, LoginBs>()
                .AddTransient<IEmployeeInformationDb, EmployeeInformationDb>()

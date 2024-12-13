@@ -38,11 +38,12 @@ namespace EmployeeManagementSystem
         }
         private void AddNewEmployeBtn_Click(object sender, EventArgs e)
         {
-            foreach (Form form in Application.OpenForms)
+            foreach (Form f in Application.OpenForms)
             {
-                if (form is AddEmployee)
+                if (f is AddEmployee)
                 {
-                    form.BringToFront();
+                    f.BringToFront();
+                    f.Activate();
                     return;
                 }
             }
@@ -57,11 +58,12 @@ namespace EmployeeManagementSystem
 
         private void button3_Click(object sender, EventArgs e)
         {
-            foreach (Form form in Application.OpenForms)
+            foreach (Form f in Application.OpenForms)
             {
-                if (form is Authentication)
+                if (f is AddEmployee)
                 {
-                    form.BringToFront();
+                    f.BringToFront();
+                    f.Activate();
                     return;
                 }
             }

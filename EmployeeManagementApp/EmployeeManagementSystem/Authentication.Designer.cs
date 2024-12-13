@@ -33,6 +33,7 @@
             EmployeeNameTextBox = new System.Windows.Forms.TextBox();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
+            button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)pbFingerprint).BeginInit();
             SuspendLayout();
             // 
@@ -81,11 +82,24 @@
             label1.TabIndex = 18;
             label1.Text = "Employee Name";
             // 
+            // button2
+            // 
+            button2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            button2.Location = new System.Drawing.Point(398, 20);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(34, 29);
+            button2.TabIndex = 23;
+            button2.Text = "X";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
             // Authentication
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(455, 294);
+            ControlBox = false;
+            Controls.Add(button2);
             Controls.Add(cboReaders);
             Controls.Add(pbFingerprint);
             Controls.Add(EmployeeNameTextBox);
@@ -93,6 +107,8 @@
             Controls.Add(label1);
             Name = "Authentication";
             Text = "Authentication";
+            FormClosing += Authentication_FormClosing;
+            FormClosed += Authentication_FormClosed;
             Load += Authentication_Load;
             ((System.ComponentModel.ISupportInitialize)pbFingerprint).EndInit();
             ResumeLayout(false);
@@ -106,5 +122,6 @@
         private System.Windows.Forms.TextBox EmployeeNameTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button2;
     }
 }

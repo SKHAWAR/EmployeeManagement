@@ -173,13 +173,13 @@ namespace EmployeeManagementSystem
             {
                 reset = false;
                 DPUruNet.Constants.ResultCode result = DPUruNet.Constants.ResultCode.DP_DEVICE_FAILURE;
-                
+
                 // Open reader
-                //                result = currentReader.Open(DPUruNet.Constants.CapturePriority.DP_PRIORITY_COOPERATIVE);
+                result = currentReader.Open(DPUruNet.Constants.CapturePriority.DP_PRIORITY_COOPERATIVE);
 
                 if (result != DPUruNet.Constants.ResultCode.DP_SUCCESS)
                 {
-                    MessageBox.Show("Error: Scanner Device is not Attached" );
+                    MessageBox.Show("Error: Scanner Device is not Attached");
                     reset = true;
                     return false;
                 }
@@ -188,13 +188,13 @@ namespace EmployeeManagementSystem
             }
         }
 
-       
+
         public bool StartCaptureAsync(Reader.CaptureCallback OnCaptured)
         {
             using (Tracer tracer = new Tracer("Form_Main::StartCaptureAsync"))
             {
                 // Activate capture handler
-                //       currentReader.On_Captured += new Reader.CaptureCallback(OnCaptured);
+                currentReader.On_Captured += new Reader.CaptureCallback(OnCaptured);
 
                 // Call capture
                 if (!CaptureFingerAsync())
@@ -290,42 +290,7 @@ namespace EmployeeManagementSystem
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            try
-            {
 
-                EmployeeInformation EmpObj = new EmployeeInformation();
-
-                EmpObj.Name = EmployeeNameTextBox.Text;
-                EmpObj.ThumbPrint = Convert.ToBase64String(Encoding.UTF8.GetBytes(cboReaders.Text));
-                bool value = EmployeeInformationBs.Insert(EmpObj);
-                if (value == true)
-                {
-                    MessageBox.Show("Employee Add Successfully");
-                    foreach (Form form in Application.OpenForms)
-                    {
-                        if (form is Admin)
-                        {
-                            form.Close();
-                            break;
-                        }
-                    }
-                    var employeeInformationBs = Program.ServiceProvider.GetRequiredService<IEmployeeInformationBs>();
-                    Admin newAdmin = new Admin(employeeInformationBs);
-                    newAdmin.Show();
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Failed to save Employee Information");
-                }
-            }
-            catch (Exception Ex)
-            {
-                MessageBox.Show(Ex.Message);
-            }
-        }
         private ReaderCollection _readers;
         private void AddEmployee_Load(object sender, EventArgs e)
         {
@@ -420,12 +385,12 @@ namespace EmployeeManagementSystem
 
                     if (count >= 4)
                     {
-                        DataResult<DPUruNet.Fmd> resultEnrollment = DPUruNet.Enrollment.CreateEnrollmentFmd(DPUruNet.Constants.Formats.Fmd.ANSI, preenrollmentFmds);
+                        resultEnrollment = DPUruNet.Enrollment.CreateEnrollmentFmd(DPUruNet.Constants.Formats.Fmd.ANSI, preenrollmentFmds);
 
                         if (resultEnrollment.ResultCode == DPUruNet.Constants.ResultCode.DP_SUCCESS)
                         {
                             SendMessage(Action.SendMessage, "An enrollment FMD was successfully created.");
-                            SendMessage(Action.SendMessage, "Place a finger on the reader.");
+                            SendMessage(Action.SendMessage, "Enter Name in the Employee Name field and" + Environment.NewLine + "Save New Employee");
                             preenrollmentFmds.Clear();
                             count = 0;
                             return;
@@ -523,6 +488,60 @@ namespace EmployeeManagementSystem
         private void cboReaders_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                EmployeeInformation EmpObj = new EmployeeInformation();
+
+                EmpObj.Name = EmployeeNameTextBox.Text;
+                EmpObj.ThumbPrint = DPUruNet.Fmd.SerializeXml(resultEnrollment.Data);
+                bool value = EmployeeInformationBs.Insert(EmpObj);
+                if (currentReader != null)
+                {
+                    currentReader.CancelCapture();
+
+                    // Dispose of reader handle and unhook reader events.
+                    currentReader.Dispose();
+
+                    if (reset)
+                    {
+                        CurrentReader = null;
+                    }
+                }
+                if (value == true)
+                {
+                    MessageBox.Show("Employee Add Successfully");
+                    foreach (Form form in Application.OpenForms)
+                    {
+                        if (form is Admin)
+                        {
+                            form.Close();
+                            break;
+                        }
+                    }
+                    var employeeInformationBs = Program.ServiceProvider.GetRequiredService<IEmployeeInformationBs>();
+                    Admin newAdmin = new Admin(employeeInformationBs);
+                    newAdmin.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to save Employee Information");
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            CancelCaptureAndCloseReader(this.OnCaptured);
+            this.Close();
         }
     }
 }

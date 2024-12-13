@@ -37,6 +37,7 @@ namespace EmployeeManagementSystem
             pbFingerprint = new System.Windows.Forms.PictureBox();
             cboReaders = new System.Windows.Forms.ComboBox();
             lblSelectReader = new System.Windows.Forms.Label();
+            button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)pbFingerprint).BeginInit();
             SuspendLayout();
             // 
@@ -106,7 +107,6 @@ namespace EmployeeManagementSystem
             cboReaders.Name = "cboReaders";
             cboReaders.Size = new System.Drawing.Size(168, 21);
             cboReaders.TabIndex = 16;
-            cboReaders.SelectedIndexChanged += cboReaders_SelectedIndexChanged;
             // 
             // lblSelectReader
             // 
@@ -117,11 +117,24 @@ namespace EmployeeManagementSystem
             lblSelectReader.Text = "Select Reader:";
             lblSelectReader.Click += lblSelectReader_Click;
             // 
+            // button2
+            // 
+            button2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            button2.Location = new System.Drawing.Point(383, 26);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(34, 29);
+            button2.TabIndex = 17;
+            button2.Text = "X";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
             // AddEmployee
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(429, 350);
+            ControlBox = false;
+            Controls.Add(button2);
             Controls.Add(cboReaders);
             Controls.Add(lblSelectReader);
             Controls.Add(btnBack);
@@ -149,5 +162,6 @@ namespace EmployeeManagementSystem
         internal System.Windows.Forms.PictureBox pbFingerprint;
         internal System.Windows.Forms.ComboBox cboReaders;
         internal System.Windows.Forms.Label lblSelectReader;
+        private System.Windows.Forms.Button button2;
     }
 }
